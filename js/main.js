@@ -50,7 +50,7 @@ let myDate = new Date();
 let getLocalDate = (date, isSeconds = false, isISO = false) => {
 
     let year = date.getFullYear();
-    let month = date.getMonth() + 1 < 9 ? '0' + date.getMonth() + 1 : date.getMonth() + 1;
+    let month = date.getMonth() + 1 < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
     let day = date.getDate() < 9 ? '0' + date.getDate() : date.getDate();
     let hour = date.getHours() < 9 ? '0' + date.getHours() : date.getHours();
     let minutes = date.getMinutes() < 9 ? '0' + date.getMinutes() : date.getMinutes();
@@ -89,6 +89,15 @@ console.log(getLocalDate(new Date(1999999123456), true) === '18.05.2033, 06:18:4
 console.log(getLocalDate(new Date(1999999123456), false, true) === '2033-05-18, 06:18');
 console.log(getLocalDate(new Date(1999999123456), true, true) === '2033-05-18, 06:18:43');
 
+console.log(getLocalDate(new Date(123456)) === '01.01.1970, 03:02');
+console.log(getLocalDate(new Date(123456), true) === '01.01.1970, 03:02:03');
+console.log(getLocalDate(new Date(123456), false, true));
+console.log(getLocalDate(new Date(123456), true, true) === '1970-01-01, 03:02:03');
+console.log(getLocalDate(new Date(1999999123456)) === '18.05.2033, 06:18');
+console.log(getLocalDate(new Date(1999999123456), true) === '18.05.2033, 06:18:43');
+console.log(getLocalDate(new Date(1999999123456), false, true) === '2033-05-18, 06:18');
+console.log(getLocalDate(new Date(1999999123456), true, true) === '2033-05-18, 06:18:43');
+
 /*
  * #3
  *
@@ -115,9 +124,12 @@ console.log(getWeekDay('2019-07-27')); // суббота
 
  let getLocalDay = (d) => {
    let date = new Date(d);
-   let days = ['7', '1', '2', '3', '4', '5', '6'];
-   return days[date.getDay()];
+   let day = date.getDay();
+
+   if (day === 0) day = 7;
+   return day;
  };
+ 
 console.log(getLocalDay('2019-07-16')); // 2
 console.log(getLocalDay('2019-07-25')); // 4
 console.log(getLocalDay('2019-07-27')); // 6
